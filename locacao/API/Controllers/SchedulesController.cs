@@ -6,7 +6,6 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Infrastructure.RepositoryServices;
 using Infrastructure.RepositoryServices.Exceptions;
-using Domain.UseCase.UserServices;
 using Domain.ViewModel;
 using Domain.UseCase;
 using Infrastructure.PdfServices;
@@ -17,14 +16,12 @@ namespace api.Controllers
     [ApiController]
     public class SchedulesController : ControllerBase
     {
-        private readonly EntityService _entityService;
         private readonly ScheduleService _scheduleService;
         private readonly ILogger<SchedulesController> _logger;
 
         public SchedulesController(ILogger<SchedulesController> logger)
         {
             _logger = logger;
-            _entityService = new EntityService(new EntityRepository());
             _scheduleService = new ScheduleService(new EntityRepository());
         }
 
