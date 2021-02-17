@@ -1,0 +1,31 @@
+using System;
+
+namespace Domain.UseCase.Builders
+{
+    public class EntityBuilder
+    {
+        public static T Call<T>(object obj)
+        {
+            var entity = Activator.CreateInstance<T>();
+            if (obj == null) return entity;
+            foreach (var field in obj.GetType().GetProperties())
+            {
+                var value = obj.GetType().GetProperty(field.Name).GetValue(obj);
+                if(value != null)
+                {
+                    var prop = entity.GetType().GetProperty(field.Name);
+                    if (prop != null)
+                    {
+                        try
+                        {
+                            prop.SetValue(entity, value);
+                        }
+                        catch { }
+                    }
+                }
+            }
+
+            return entity;
+        }
+    }
+}
